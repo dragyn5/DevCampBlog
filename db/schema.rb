@@ -10,15 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170417200845) do
+ActiveRecord::Schema.define(version: 20170418164512) do
 
   create_table "blogs", force: :cascade do |t|
     t.string   "title"
     t.text     "body"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.string   "slug"
-    t.integer  "status",     default: 0
+    t.integer  "status",           default: 0
+    t.string   "topic_references"
     t.index ["slug"], name: "index_blogs_on_slug", unique: true
   end
 
@@ -49,6 +50,12 @@ ActiveRecord::Schema.define(version: 20170417200845) do
     t.integer  "percent_utilized"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+  end
+
+  create_table "topics", force: :cascade do |t|
+    t.string   "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
