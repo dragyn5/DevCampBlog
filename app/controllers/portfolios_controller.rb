@@ -1,4 +1,5 @@
 class PortfoliosController < ApplicationController
+  before_action :set_portfolio_item, only: [:edit, :update, :show, :destroy]
   layout "portfolio"
   def index
     @portfolio_items = Portfolio.all
@@ -14,8 +15,6 @@ class PortfoliosController < ApplicationController
   end
 
    def create
-    @portfolio_item = Portfolio.new(portfolio_params)
-
     respond_to do |format|
       if @portfolio_item.save
         format.html {redirect_to portfolios_path, notice: 'Your portfolio item is live' }
@@ -27,13 +26,9 @@ class PortfoliosController < ApplicationController
 
 
 def edit
-    @portfolio_items = Portfolio.find(params[:id])
-    
 end
 
   def update
-    @portfolio_items = Portfolio.find(params[:id])
-
     respond_to do |format|
       if @portfolio_items.update(portfolio_params)
         format.html { redirect_to portfolios_path, notice: 'the record was successfully updated.' }
@@ -44,15 +39,11 @@ end
   end
   
 def show
-    @portfolio_items = Portfolio.find(params[:id])
 end
 
 def destroy
-  #perform the lookup
-    @portfolio_items = Portfolio.find(params[:id])
   #destroy the record
     @portfolio_items.destroy
-
   #redirect  
     respond_to do |format|
       format.html { redirect_to portfolios_url, notice: 'Record was removed.' }
@@ -72,6 +63,9 @@ private
     
   end
 
+def set_portfolio_item
+  @portfolio_items = Portfolio.find(params[:id])
+end
 
 
 end
