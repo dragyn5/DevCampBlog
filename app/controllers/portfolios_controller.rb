@@ -3,6 +3,8 @@ class PortfoliosController < ApplicationController
   before_action :set_portfolio_item, only: [:edit, :update, :show, :destroy]
 
   layout "portfolio"
+  access all: [:show, :index, :angular], user: {except: [:destroy, :new, :create, :update, :edit]}, site_admin: :all
+
   def index
     @portfolio_items = Portfolio.all
     end
@@ -17,8 +19,9 @@ class PortfoliosController < ApplicationController
   end
 
    def create
+    @portfolio_items = Portfolio.new(portfolio_params)
     respond_to do |format|
-      if @portfolio_item.save
+      if @portfolio_items.save
         format.html {redirect_to portfolios_path, notice: 'Your portfolio item is live' }
       else
         format.html { render :new }
@@ -61,8 +64,6 @@ private
                                       technologies_attributes: [:name]
                                       )
 
-
-    
   end
 
 def set_portfolio_item
